@@ -3,9 +3,10 @@ import { Button, message, Space } from 'antd';
 
 const App: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi2, contextHolder2] = message.useMessage();
 
   const success = () => {
-    messageApi.open({
+    messageApi2.open({
       type: 'success',
       content: 'This is a success message',
     });
@@ -28,6 +29,7 @@ const App: React.FC = () => {
   return (
     <>
       {contextHolder}
+      {contextHolder2}
       <Space>
         <Button onClick={success}>Success</Button>
         <Button onClick={error}>Error</Button>

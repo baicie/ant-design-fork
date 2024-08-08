@@ -118,6 +118,7 @@ const Holder = React.forwardRef<HolderRef, HolderProps>((props, ref) => {
 // ==                                   Hook                                   ==
 // ==============================================================================
 let keyIndex = 0;
+let singletonInstance: [MessageInstance, React.ReactElement] | null = null;
 
 export function useInternalMessage(
   messageConfig?: HolderProps,
@@ -242,7 +243,14 @@ export function useInternalMessage(
   }, []);
 
   // ============================== Return ===============================
-  return [wrapAPI, <Holder key="message-holder" {...messageConfig} ref={holderRef} />] as const;
+  if (singletonInstance) {
+    return singletonInstance;
+  }
+  singletonInstance = [
+    wrapAPI,
+    <Holder key="message-holder" {...messageConfig} ref={holderRef} />,
+  ] as const;
+  return singletonInstance;
 }
 
 export default function useMessage(messageConfig?: ConfigOptions) {
